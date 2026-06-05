@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Martina A. Seveso — Cognitive Neuroscientist</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   COLOUR TOKENS — edit here to retheme the whole site
+   ============================================================ */
+:root {
+  --bg:#faf7f2; --surf:#fff; --surf2:#f3ede3; --ink:#1e1a14;
+  --muted:#6b5f50; --line:#ddd4c4; --acc:#6b6b2e; --acc2:#7a3028;
+  --acc-bg:#edeedd; --tag-bg:#eee8de; --tag-fg:#5a4030;
+  --tinsel:#c49a3c; --seafoam:#9eb3a0; --crownblue:#3f3f5a;
+}
+
+
+[data-dark] {
+  --bg:#1a1712; --surf:#242018; --surf2:#2e2920; --ink:#f0ebe0;
+  --muted:#a89880; --line:#3a332a; --acc:#d4805a; --acc2:#9eb3a0;
+  --acc-bg:#2e2316; --tag-bg:#302a1e; --tag-fg:#c8966c;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'EB Garamond',Georgia,serif;background:var(--bg);color:var(--ink);font-size:17px;line-height:1.7;transition:background .3s,color .3s;min-height:100vh;}
+a{color:var(--acc);}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:200;background:rgba(250,247,242,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:0 clamp(1rem,4vw,2.5rem);display:flex;align-items:center;justify-content:space-between;height:56px;transition:background .3s,border-color .3s;}
+[data-dark] nav{background:rgba(26,23,18,0.95);}
+.brand{font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);cursor:pointer;letter-spacing:.05em;background:none;border:none;font-weight:400;}
+.brand:hover{color:var(--acc);}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-links{display:flex;gap:2px;list-style:none;flex-wrap:wrap;}
+.nav-links button{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);background:none;border:none;cursor:pointer;letter-spacing:.04em;padding:5px 10px;border-radius:6px;transition:all .18s;}
+.nav-links button:hover{color:var(--acc);background:var(--acc-bg);}
+.nav-links button.act{color:var(--acc);background:var(--acc-bg);font-weight:500;}
+.toggle{width:40px;height:22px;border-radius:999px;background:var(--line);border:none;cursor:pointer;position:relative;flex-shrink:0;transition:background .3s;}
+.toggle::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--surf);transition:transform .3s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+[data-dark] .toggle{background:var(--acc);}
+[data-dark] .toggle::after{transform:translateX(18px);}
+/* hamburger */
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+.burger span{display:block;width:22px;height:2px;background:var(--muted);border-radius:2px;transition:transform .25s,opacity .25s;}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.burger.open span:nth-child(2){opacity:0;}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mob-menu{display:none;position:fixed;inset:56px 0 0 0;z-index:190;background:var(--bg);flex-direction:column;padding:2rem clamp(1rem,5vw,2.5rem);gap:1.4rem;border-top:1px solid var(--line);overflow-y:auto;}
+.mob-menu.open{display:flex;}
+.mob-menu button{font-family:'DM Mono',monospace;font-size:15px;color:var(--ink);background:none;border:none;text-align:left;cursor:pointer;padding:4px 0;letter-spacing:.04em;}
+.mob-menu button:hover,.mob-menu button.act{color:var(--acc);}
+
+/* LAYOUT */
+.page{display:none;padding:clamp(2rem,5vw,3.5rem) clamp(1rem,5vw,2.5rem) 4rem;max-width:820px;margin:0 auto;}
+.page.on{display:block;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;}
+.page-title{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:600;line-height:1.15;margin-bottom:1.5rem;}
+.page-title em{font-style:italic;color:var(--acc);}
+.sec-lbl{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:2.2rem 0 1rem;display:flex;align-items:center;gap:.7rem;}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--line);}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr auto;gap:clamp(1.5rem,4vw,3rem);align-items:start;margin-bottom:2.2rem;}
+.avatar{width:clamp(88px,14vw,140px);height:clamp(88px,14vw,140px);border-radius:50%;background:var(--surf2);border:3px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:clamp(1.6rem,3.5vw,2.8rem);color:var(--acc);font-family:'EB Garamond',serif;font-weight:600;flex-shrink:0;margin-top:1rem;transition:background .3s,border-color .3s;}
+/* ✏️ To add your photo: replace <div class="avatar">MS</div> with
+   <img src="photo.jpg" class="avatar" style="object-fit:cover;"> */
+.bio{font-size:clamp(15px,2.2vw,18px);color:var(--muted);max-width:540px;margin-bottom:1.6rem;}
+.pills{display:flex;flex-wrap:wrap;gap:7px;}
+.pill{display:inline-flex;align-items:center;font-family:'DM Mono',monospace;font-size:12px;font-weight:500;padding:7px 16px;border-radius:999px;text-decoration:none;cursor:pointer;transition:all .18s;border:none;}
+.pill-p{background:var(--acc);color:#fff;}
+.pill-p:hover{filter:brightness(1.1);}
+.pill-o{border:1.5px solid var(--line);color:var(--muted);background:var(--surf);}
+.pill-o:hover{border-color:var(--acc);color:var(--acc);background:var(--acc-bg);}
+.kw-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:1.4rem;}
+.tag{font-family:'DM Mono',monospace;font-size:12px;padding:4px 12px;border:1px solid var(--line);border-radius:6px;color:var(--muted);background:var(--surf);}
+.ql-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin-top:.5rem;}
+.ql{padding:1.1rem 1.2rem;background:var(--surf);border:1px solid var(--line);border-radius:10px;cursor:pointer;transition:border-color .2s,background .3s;text-align:left;font-family:inherit;}
+.ql:hover{border-color:var(--acc);background:var(--acc-bg);}
+.ql-lbl{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.ql-title{font-size:16px;font-weight:600;color:var(--ink);}
+.ql-arr{margin-top:10px;font-size:17px;color:var(--acc);}
+
+/* CARDS */
+.card{padding:1.2rem 1.4rem;background:var(--surf);border:1px solid var(--line);border-radius:10px;margin-bottom:.9rem;transition:border-color .2s,background .3s;}
+.card:hover{border-color:var(--acc);}
+.card-title{font-size:17px;font-weight:600;margin-bottom:4px;line-height:1.35;}
+.card-sub{font-style:italic;color:var(--acc);font-size:15px;}
+.card-meta{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);margin-bottom:5px;}
+
+/* BADGES */
+.badge{display:inline-block;font-family:'DM Mono',monospace;font-size:11px;padding:2px 9px;border-radius:4px;font-weight:500;}
+.b-pub{background:#f2e8d8;color:#7a3028;} .b-talk{background:#e8ede0;color:#4a5a2a;}
+.b-award{background:#fdf0d8;color:#7a5a10;} .b-prep{background:#ece8f5;color:#3f3f5a;}
+.b-pos{background:#e0e8f0;color:#2a4060;}
+[data-dark] .b-pub{background:#3a2010;color:#d4805a;} [data-dark] .b-talk{background:#202e18;color:#9eb3a0;}
+[data-dark] .b-award{background:#2e2410;color:#c49a3c;} [data-dark] .b-prep{background:#28203a;color:#9090c0;}
+[data-dark] .b-pos{background:#18202e;color:#8090b0;}
+
+/* NEWS */
+.news-row{display:grid;grid-template-columns:96px 1fr;gap:0 14px;padding:11px 0;border-bottom:1px solid var(--line);align-items:baseline;}
+.news-row:last-child{border-bottom:none;}
+.news-date{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);padding-top:3px;}
+.news-txt{font-size:16px;color:var(--ink);line-height:1.55;}
+.news-txt a{color:var(--acc);text-decoration:none;} .news-txt a:hover{text-decoration:underline;}
+
+/* CV */
+.cv-row{display:grid;grid-template-columns:110px 1fr;gap:0 16px;padding:14px 0;border-bottom:1px solid var(--line);}
+.cv-row:last-child{border-bottom:none;}
+.cv-yr{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);padding-top:3px;}
+.cv-role{font-size:17px;font-weight:600;margin-bottom:2px;}
+.cv-place{font-style:italic;color:var(--acc);font-size:15px;margin-bottom:6px;}
+.cv-bullets{padding-left:18px;color:var(--muted);font-size:15px;line-height:1.6;}
+.cv-bullets li{margin-bottom:3px;}
+.skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;}
+.skill-card{padding:1rem 1.2rem;background:var(--surf);border:1px solid var(--line);border-radius:9px;transition:background .3s;}
+.skill-lbl{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:5px;}
+.skill-body{font-size:14px;color:var(--ink);line-height:1.55;}
+.cert-item{font-size:14px;color:var(--muted);display:flex;gap:8px;padding:4px 0;}
+.cert-item::before{content:'—';color:var(--acc);flex-shrink:0;}
+.lang-row{display:flex;flex-wrap:wrap;gap:7px;}
+.lang-pill{font-family:'DM Mono',monospace;font-size:13px;padding:5px 14px;border:1px solid var(--line);border-radius:999px;color:var(--muted);}
+
+/* RESEARCH */
+.rt-card{padding:1.2rem 1.4rem;background:var(--surf);border:1px solid var(--line);border-radius:10px;margin-bottom:.9rem;transition:border-color .2s;}
+.rt-card:hover{border-color:var(--acc);}
+.rt-title{font-size:17px;font-weight:600;margin-bottom:5px;}
+.rt-body{font-size:15px;color:var(--muted);line-height:1.6;}
+
+/* PUBS - conferences */
+.conf-row{display:grid;grid-template-columns:56px 1fr;gap:0 12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px;}
+.conf-row:last-child{border-bottom:none;}
+.conf-yr{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:1.5rem;}
+.contact-card{padding:1.1rem 1.3rem;background:var(--surf);border:1px solid var(--line);border-radius:10px;text-decoration:none;display:flex;flex-direction:column;gap:3px;transition:border-color .2s,background .3s;}
+.contact-card:hover{border-color:var(--acc);background:var(--acc-bg);}
+.cc-lbl{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);}
+.cc-val{font-size:15px;color:var(--acc);word-break:break-all;}
+.ref-card{padding:1.1rem 1.3rem;background:var(--surf);border:1px solid var(--line);border-radius:10px;margin-bottom:.8rem;}
+.ref-name{font-size:17px;font-weight:600;}
+.ref-place{font-style:italic;color:var(--acc);font-size:15px;}
+.ref-email{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);margin-top:3px;}
+
+/* FOOTER */
+footer{border-top:1px solid var(--line);padding:clamp(1rem,3vw,1.8rem) clamp(1rem,5vw,2.5rem);max-width:820px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;}
+.ft{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  .nav-links{display:none;} .burger{display:flex;}
+}
+@media(min-width:641px){
+  .burger{display:none;} .mob-menu{display:none!important;}
+}
+@media(max-width:520px){
+  .hero{grid-template-columns:1fr;gap:1rem;} .avatar{order:-1;margin-top:0;}
+  .news-row,.cv-row,.conf-row{grid-template-columns:1fr;gap:3px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <button class="brand" onclick="show('home')">dr. martina a. seveso</button>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><button onclick="show('home')" id="nb-home" class="act">Home</button></li>
+      <li><button onclick="show('news')" id="nb-news">News</button></li>
+      <li><button onclick="show('research')" id="nb-research">Research</button></li>
+      <li><button onclick="show('pubs')" id="nb-pubs">Publications</button></li>
+      <li><button onclick="show('cv')" id="nb-cv">CV</button></li>
+      <li><button onclick="show('contact')" id="nb-contact">Contact</button></li>
+    </ul>
+    <button class="toggle" id="tog" aria-label="Toggle dark mode"></button>
+    <button class="burger" id="burger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<nav class="mob-menu" id="mobMenu">
+  <button onclick="show('home');closeMob()">Home</button>
+  <button onclick="show('news');closeMob()">News</button>
+  <button onclick="show('research');closeMob()">Research</button>
+  <button onclick="show('pubs');closeMob()">Publications</button>
+  <button onclick="show('cv');closeMob()">CV</button>
+  <button onclick="show('contact');closeMob()">Contact</button>
+</nav>
+
+<!-- ===================== HOME ===================== -->
+<div class="page on" id="p-home">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Postdoctoral Researcher · Trinity College Dublin, Ireland</div>
+      <h1>Dr. <em>Martina Seveso</em></h1>
+      <!-- ✏️ Edit bio text below -->
+      <p class="bio">Cognitive Neuroscientist specialising in multisensory perception, object categorisation, and neuroimaging (fMRI). I investigate how the brain integrates visual, haptic, and auditory information to form object representations — combining behavioural experiments, neuroimaging, and virtual reality.</p>
+      <div class="pills">
+        <button class="pill pill-p" onclick="show('cv')">View CV</button>
+        <!-- ✏️ Update links below -->
+        <a class="pill pill-o" href="mailto:martinaseveso3@gmail.com">Email</a>
+        <a class="pill pill-o" href="https://osf.io/bhwg8/">OSF</a>
+        <a class="pill pill-o" href="https://orcid.org/0000-0001-6566-4578">ORCID</a>
+        <a class="pill pill-o" href="https://linkedin.com/in/martina-seveso-4214821a2">LinkedIn</a>
+        <a class="pill pill-o" href="https://www.researchgate.net/profile/Martina-Seveso">ResearchGate</a>
+      </div>
+      <div class="kw-row">
+        <span class="tag">Multisensory Perception</span><span class="tag">fMRI</span>
+        <span class="tag">Object Categorisation</span><span class="tag">Haptics</span>
+        <span class="tag">Virtual Reality</span><span class="tag">EEG</span>
+        <span class="tag">Python · R</span><span class="tag">Open Science</span>
+      </div>
+    </div>
+    <!-- Replace with your photo:
+         <img src="photo.jpg" class="avatar" style="object-fit:cover;"> -->
+    <img src="photo.jpg" class="avatar" style="object-fit:cover;">
+  </div>
+  <div class="ql-grid">
+    <button class="ql" onclick="show('news')"><div class="ql-lbl">Latest</div><div class="ql-title">News &amp; Updates</div><div class="ql-arr">→</div></button>
+    <button class="ql" onclick="show('research')"><div class="ql-lbl">Overview</div><div class="ql-title">Research</div><div class="ql-arr">→</div></button>
+    <button class="ql" onclick="show('pubs')"><div class="ql-lbl">Papers</div><div class="ql-title">Publications</div><div class="ql-arr">→</div></button>
+    <button class="ql" onclick="show('cv')"><div class="ql-lbl">Background</div><div class="ql-title">CV</div><div class="ql-arr">→</div></button>
+  </div>
+</div>
+
+<!-- ===================== NEWS ===================== -->
+<!-- ✏️ To add a news item: copy a .news-row block and paste at the top. Change date, badge class (b-pub/b-talk/b-award/b-pos/b-prep), and text. -->
+<div class="page" id="p-news">
+  <div class="eyebrow">Latest</div>
+  <h2 class="page-title">News &amp; <em>Updates</em></h2>
+  <div class="sec-lbl">2026</div>
+  <div class="news-row"><span class="news-date">Jun 2026</span><div><span class="badge b-talk">Talk</span><p class="news-txt" style="margin-top:3px">Poster at <strong>IMRF 2026</strong>, Genova — <em>Flexible Multisensory Category Representations.</em></p></div></div>
+  <div class="news-row"><span class="news-date">Jun 2026</span><div><span class="badge b-talk">Talk</span><p class="news-txt" style="margin-top:3px">Poster at <strong>Eurohaptics 2026</strong>, Siena — <em>Haptic Category Learning and Cross-Modal Transfer.</em></p></div></div>
+  <div class="news-row"><span class="news-date">2026</span><div><span class="badge b-pub">Publication</span><p class="news-txt" style="margin-top:3px"><em>Visual and tactile motion cues enhance the categorisation of novel object shapes.</em> Experimental Brain Research, 244(4), 48.</p></div></div>
+  <div class="news-row"><span class="news-date">2026</span><div><span class="badge b-pub">Publication</span><p class="news-txt" style="margin-top:3px"><em>Delivering tactile stimuli via mobile browsers.</em> Behavior Research Methods, 58(4), 106.</p></div></div>
+  <div class="news-row"><span class="news-date">2026</span><div><span class="badge b-prep">Under Review</span><p class="news-txt" style="margin-top:3px"><em>Evidence for a Haptic Over Vision Bias in the Categorisation of Novel Objects using VR</em> — under review, Transactions on Applied Perception.</p></div></div>
+  <div class="sec-lbl">2025</div>
+  <div class="news-row"><span class="news-date">Oct 2025</span><div><span class="badge b-pos">Position</span><p class="news-txt" style="margin-top:3px">Started Postdoctoral Researcher position at <strong>TCIN, Trinity College Dublin.</strong></p></div></div>
+  <div class="news-row"><span class="news-date">Sep 2025</span><div><span class="badge b-talk">Talk</span><p class="news-txt" style="margin-top:3px">Poster at <strong>ECVP 2025</strong>, Mainz — <em>Haptic Cues enhance online categorization.</em></p></div></div>
+  <div class="news-row"><span class="news-date">May 2025</span><div><span class="badge b-award">Award</span><p class="news-txt" style="margin-top:3px">Shortlisted <strong>2nd for poster prize</strong> at IMRF 2025, Durham.</p></div></div>
+  <div class="sec-lbl">2024</div>
+  <div class="news-row"><span class="news-date">Nov 2024</span><div><span class="badge b-talk">Talk</span><p class="news-txt" style="margin-top:3px">Oral presentation at <strong>OPAM 2024</strong>, New York — <em>Motion affects inter-object perceptual similarity.</em></p></div></div>
+  <div class="news-row"><span class="news-date">Nov 2024</span><div><span class="badge b-talk">Talk</span><p class="news-txt" style="margin-top:3px">Poster at <strong>Psychonomic Society 2024</strong>, New York — <em>Object movement or sound and inter-item perceptual similarity.</em></p></div></div>
+  <div class="news-row"><span class="news-date">2024</span><div><span class="badge b-pub">Publication</span><p class="news-txt" style="margin-top:3px"><em>Generalisation to novel exemplars of learned shape categories.</em> Psychonomic Bulletin &amp; Review.</p></div></div>
+  <div class="news-row"><span class="news-date">2023</span><div><span class="badge b-pub">Publication</span><p class="news-txt" style="margin-top:3px"><em>Multisensory perception constrains the formation of object categories.</em> Philosophical Transactions of the Royal Society B.</p></div></div>
+</div>
+
+<!-- ===================== RESEARCH ===================== -->
+<!-- ✏️ Edit research descriptions below -->
+<div class="page" id="p-research">
+  <div class="eyebrow">Overview</div>
+  <h2 class="page-title"><em>Research</em></h2>
+  <div class="sec-lbl">About my work</div>
+  <p style="font-size:17px;color:var(--muted);max-width:660px;margin-bottom:.9rem;">I am a Cognitive Neuroscientist at the Trinity College Institute of Neuroscience (TCIN). My research investigates how the brain integrates touch, vision, and sound to build coherent object representations — asking how we learn to categorise objects we have never encountered before.</p>
+  <p style="font-size:16px;color:var(--muted);max-width:660px;">I combine immersive VR experiments, fMRI, EEG, and physiological measures within reproducible open-science pipelines. My current postdoc focuses on neural substrates of visual and haptic categorisation across younger and older adults.</p>
+  <div class="sec-lbl">Research themes</div>
+  <div class="rt-card"><div class="rt-title">Multisensory Object Perception &amp; Categorisation</div><p class="rt-body">How does the brain combine visual, haptic, and auditory signals to form stable object categories? My work uses novel 3D objects and immersive VR to examine cross-modal transfer, categorical learning, and haptic-over-vision bias.</p></div>
+  <div class="rt-card"><div class="rt-title">Neuroimaging of Object Representations (fMRI)</div><p class="rt-body">I design and run fMRI experiments to identify cortical regions underlying unimodal and multimodal object processing, applying RSA and GLMs to characterise how categories are encoded across age groups.</p></div>
+  <div class="rt-card"><div class="rt-title">Virtual Reality as an Experimental Tool</div><p class="rt-body">I build Unity-based VR paradigms presenting 3D objects with simultaneous haptic, visual, and auditory feedback — enabling the study of perception beyond traditional lab constraints.</p></div>
+  <div class="rt-card"><div class="rt-title">Ageing &amp; Multisensory Perception</div><p class="rt-body">My current project compares how younger and older adults form and transfer object categories across modalities — asking whether ageing shifts sensory channel weighting during learning.</p></div>
+  <div class="rt-card"><div class="rt-title">Physiological &amp; Behavioural Data Science</div><p class="rt-body">I combine eye tracking, GSR/EDA, EEG, and fMRI data within reproducible Python and R pipelines, applying LME, survival analysis, clustering, and Bayesian inference.</p></div>
+  <div class="sec-lbl">Keywords</div>
+  <div class="kw-row">
+    <span class="tag">Multisensory perception</span><span class="tag">Sensory integration</span>
+    <span class="tag">Object categorisation</span><span class="tag">Neural representation</span>
+    <span class="tag">Haptic cognition</span><span class="tag">fMRI · EEG</span>
+    <span class="tag">Virtual reality</span><span class="tag">Ageing &amp; perception</span>
+    <span class="tag">Bayesian approaches</span><span class="tag">Open science</span>
+  </div>
+</div>
+
+<!-- ===================== PUBLICATIONS ===================== -->
+<!-- ✏️ To add a paper: copy a .card block. To add a talk: copy a .conf-row block. -->
+<div class="page" id="p-pubs">
+  <div class="eyebrow">Papers &amp; Conferences</div>
+  <h2 class="page-title"><em>Publications</em></h2>
+  <p style="font-size:15px;color:var(--muted);margin:.4rem 0 .3rem;">Full list on <a href="https://www.researchgate.net/profile/Martina-Seveso">ResearchGate</a> · <a href="https://orcid.org/0000-0001-6566-4578">ORCID 0000-0001-6566-4578</a></p>
+  <div class="sec-lbl">Peer-reviewed articles</div>
+  <div class="card"><div class="card-title">Motion, but not sound, affects the inter-object perceptual similarity of 3D novel objects</div><div class="card-meta">Seveso M.A., O'Dowd A., Hirst R.J., &amp; Newell F.N.</div><div class="card-sub">Journal of Vision — in preparation</div><div style="margin-top:7px"><span class="badge b-prep">In prep</span></div></div>
+  <div class="card"><div class="card-title">Evidence for a Haptic Over Vision Bias in the Categorisation of Novel Objects using Virtual Reality</div><div class="card-meta">Seveso M.A., Kidney E., &amp; Newell F.N.</div><div class="card-sub">Transactions on Applied Perception — under review (2026)</div><div style="margin-top:7px"><span class="badge b-prep">Under Review</span></div></div>
+  <div class="card"><div class="card-title">Visual and tactile motion cues enhance the categorisation of novel object shapes</div><div class="card-meta">Seveso M.A., Hirst R.J., O'Dowd A., Camponogara I., &amp; Newell F.N.</div><div class="card-sub">Experimental Brain Research, 244(4), 48 — 2026</div><div style="margin-top:7px"><span class="badge b-pub">Published</span></div></div>
+  <div class="card"><div class="card-title">Delivering tactile stimuli via mobile browsers</div><div class="card-meta">Hirst R., Roberts K., Seveso M.A., O'Dowd A., Peirce J., &amp; Newell F.N.</div><div class="card-sub">Behavior Research Methods, 58(4), 106 — 2026</div><div style="margin-top:7px"><span class="badge b-pub">Published</span></div></div>
+  <div class="card"><div class="card-title">Generalisation to novel exemplars of learned shape categories</div><div class="card-meta">O'Dowd A., Hirst R.J., Seveso M.A., McKenna E., &amp; Newell F.N.</div><div class="card-sub">Psychonomic Bulletin &amp; Review — 2024</div><div style="margin-top:7px"><span class="badge b-pub">Published</span></div></div>
+  <div class="card"><div class="card-title">Multisensory perception constrains the formation of object categories</div><div class="card-meta">Newell F.N., McKenna E., Seveso M.A., et al.</div><div class="card-sub">Philosophical Transactions of the Royal Society B — 2023</div><div style="margin-top:7px"><span class="badge b-pub">Published</span></div></div>
+  <div class="sec-lbl">Conference presentations</div>
+  <div class="conf-row"><span class="conf-yr">2026</span><span><em>Haptic Category Learning and Cross-Modal Transfer.</em> Eurohaptics 2026, Siena — poster</span></div>
+  <div class="conf-row"><span class="conf-yr">2026</span><span><em>Flexible Multisensory Category Representations.</em> IMRF 2026, Genova — poster</span></div>
+  <div class="conf-row"><span class="conf-yr">2025</span><span><em>Haptic Cues enhance online categorization.</em> ECVP 2025, Mainz — poster</span></div>
+  <div class="conf-row"><span class="conf-yr">2025</span><span><em>Haptic Cues enhance online categorization.</em> IMRF 2025, Durham — poster ★ shortlisted 2nd for poster prize</span></div>
+  <div class="conf-row"><span class="conf-yr">2024</span><span><em>Object movement or sound and inter-item perceptual similarity.</em> Psychonomic Society 2024, New York — poster</span></div>
+  <div class="conf-row"><span class="conf-yr">2024</span><span><em>Motion affects inter-object perceptual similarity.</em> OPAM 2024, New York — oral presentation</span></div>
+  <div class="conf-row"><span class="conf-yr">2024</span><span><em>Motion affects inter-object similarity.</em> EPS Nottingham 2024 — poster</span></div>
+  <div class="conf-row"><span class="conf-yr">2023</span><span><em>Cross modal interactions in categorical perception.</em> IMRF 2023, Brussels — poster</span></div>
+</div>
+
+<!-- ===================== CV ===================== -->
+<!-- ✏️ Edit CV entries below. Copy .cv-row blocks to add entries. -->
+<div class="page" id="p-cv">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:2rem;">
+    <div><div class="eyebrow">Background &amp; Experience</div><h2 class="page-title" style="margin-bottom:0"><em>Curriculum Vitae</em></h2></div>
+    <!-- ✏️ Put your PDF in the same folder as this file and update the href -->
+    <a class="pill pill-p" href="CV_MartinaSevesoMAY26.pdf" style="margin-top:4px;text-decoration:none;">Download PDF</a>
+  </div>
+  <div class="sec-lbl">Professional experience</div>
+  <div class="cv-row"><span class="cv-yr">Oct 2025 — present</span><div><div class="cv-role">Postdoctoral Researcher</div><div class="cv-place">Trinity College Institute of Neuroscience (TCIN), Dublin, Ireland</div><ul class="cv-bullets"><li>Designed and led fMRI experiments on visual &amp; haptic object perception across younger and older adults — full pipeline from task design through data acquisition to statistical analysis.</li><li>Built reproducible Python pipelines for neuroimaging (nilearn); applied LME and GLM models to large datasets.</li><li>Advanced statistical modelling: LME, survival analysis, k-means clustering in R.</li><li>Co-supervised research assistants; disseminating at Eurohaptics 2026 and IMRF 2026.</li></ul></div></div>
+  <div class="cv-row"><span class="cv-yr">Sep 2023 — Sep 2024</span><div><div class="cv-role">Teaching Assistant — Research Methods &amp; Statistics (Python Labs)</div><div class="cv-place">Trinity College Dublin, School of Psychology</div><ul class="cv-bullets"><li>Delivered Python data analysis labs to undergraduates; developed teaching materials in scientific computing.</li></ul></div></div>
+  <div class="cv-row"><span class="cv-yr">Apr 2021 — Oct 2021</span><div><div class="cv-role">Cognitive Psychology &amp; UX Research Intern</div><div class="cv-place">SR Labs: The Eye Tracking Company, Milano, Italy</div><ul class="cv-bullets"><li>Designed UX eye-tracking experiments; built automated pupillometry pipelines using Tobii Pro Lab.</li></ul></div></div>
+  <div class="cv-row"><span class="cv-yr">Mar 2019 — Aug 2019</span><div><div class="cv-role">Research Intern — Haptics &amp; Virtual Prototyping Lab</div><div class="cv-place">Politecnico di Milano, Department of Mechanics, Milano</div><ul class="cv-bullets"><li>Designed Unity-based VR experiments for HRI; collected physiological (SCR/EDA) and behavioural data.</li></ul></div></div>
+  <div class="sec-lbl">Education</div>
+  <div class="cv-row"><span class="cv-yr">2021 — 2025</span><div><div class="cv-role">PhD, Experimental Cognitive Psychology &amp; Neuroscience</div><div class="cv-place">Trinity College Institute of Neuroscience, Dublin, Ireland</div><ul class="cv-bullets"><li>Thesis: <em>Multisensory processing: the formation of object categories.</em> Supervised by Prof. Fiona Newell.</li><li>VR paradigms with real-time haptic, visual, and auditory feedback; LME, survival analysis, k-means, fMRI &amp; EEG.</li><li>6 peer-reviewed publications. Shortlisted 2nd for poster prize, IMRF 2025.</li></ul></div></div>
+  <div class="cv-row"><span class="cv-yr">2021</span><div><div class="cv-role">Summer School: Human Factors and Virtual Reality</div><div class="cv-place">Università degli Studi di Milano-Bicocca, Milano</div></div></div>
+  <div class="cv-row"><span class="cv-yr">2017 — 2020</span><div><div class="cv-role">MSc, Applied Experimental Psychological Sciences — <em>Summa cum laude</em></div><div class="cv-place">Università degli Studi di Milano-Bicocca, Milano</div><ul class="cv-bullets"><li>Thesis: <em>The Multisensory Experience of Sweet Food</em> (FoodNet Project). Supervised by Prof. Alberto Gallace.</li></ul></div></div>
+  <div class="cv-row"><span class="cv-yr">2013 — 2017</span><div><div class="cv-role">BSc, Psychological Sciences and Techniques</div><div class="cv-place">Università degli Studi di Milano-Bicocca, Milano</div><ul class="cv-bullets"><li>Thesis: <em>Psychophysiological Correlates of Visual-Tactile Consumer Product Exploration.</em> EEG &amp; GSR.</li></ul></div></div>
+  <div class="sec-lbl">Technical skills</div>
+  <div class="skill-grid">
+    <div class="skill-card"><div class="skill-lbl">Programming</div><div class="skill-body">Python (numpy, pandas, scipy, sklearn, nilearn), R (lme4, ggplot2, survival, tidyverse), MATLAB, C# (Unity), GitHub</div></div>
+    <div class="skill-card"><div class="skill-lbl">VR &amp; Experiments</div><div class="skill-body">Unity (VR design &amp; integration), PsychoPy, Pavlovia; real-time data collection</div></div>
+    <div class="skill-card"><div class="skill-lbl">Physiological</div><div class="skill-body">EEG, GSR/EDA, fMRI (preprocessing &amp; analysis), Eye Tracking (Tobii Pro Lab), multimodal synchronisation</div></div>
+    <div class="skill-card"><div class="skill-lbl">Statistical</div><div class="skill-body">LME, Bayesian causal inference, survival analysis, k-means, GLM, dimensionality reduction</div></div>
+    <div class="skill-card"><div class="skill-lbl">3D &amp; Movement</div><div class="skill-body">Blender, Fusion 360, AutoCAD; VR kinematics; mediapipe hand tracking (Python)</div></div>
+    <div class="skill-card"><div class="skill-lbl">Open Science</div><div class="skill-body">OSF, GitHub, preregistration, GDPR-compliant data management</div></div>
+  </div>
+  <div class="sec-lbl">Languages</div>
+  <div class="lang-row">
+    <span class="lang-pill">Italian — mother tongue</span>
+    <span class="lang-pill">English — fluent</span>
+    <span class="lang-pill">French — beginner (actively improving)</span>
+  </div>
+  <div class="sec-lbl">Selected certifications</div>
+  <div class="cert-item">Creating Perceptual and Behavioral Experiments with Unity and VR — York University</div>
+  <div class="cert-item">Bayesian Causal Inference — in-person workshop, Durham University</div>
+  <div class="cert-item">Machine Learning — Stanford University (Andrew Ng)</div>
+  <div class="cert-item">SPM Course for fMRI/VBM — in-person workshop, UCL</div>
+  <div class="cert-item">Principles of fMRI (1 &amp; 2) / Neuroimaging Specialization — Johns Hopkins University</div>
+  <div class="cert-item">Complete Neural Signal Processing and Analysis — Mike X Cohen, Radboud University</div>
+  <div class="cert-item">Data Visualisation &amp; Dashboarding with R — Johns Hopkins University</div>
+  <div class="cert-item">Python for Data Science, AI &amp; Development — IBM</div>
+  <div class="sec-lbl">Public engagement</div>
+  <div class="cert-item">European Researcher Night (2022–2024), Dublin</div>
+  <div class="cert-item">Touch in perspective: Have we lost sight of our sense of touch? — SHUF (2021), Dublin</div>
+  <div class="cert-item">European Researcher Night (2019), Milan</div>
+  <div class="cert-item">Volunteer, Comunità Nuova Onlus — food distribution during COVID-19 (2021)</div>
+</div>
+
+<!-- ===================== CONTACT ===================== -->
+<div class="page" id="p-contact">
+  <div class="eyebrow">Get in touch</div>
+  <h2 class="page-title"><em>Contact</em></h2>
+  <p style="font-size:17px;color:var(--muted);max-width:520px;margin:.5rem 0 1.8rem;">Happy to hear from collaborators, prospective students, or journalists. I aim to reply within a few days.</p>
+  <div class="sec-lbl">Direct contact</div>
+  <div class="contact-grid">
+    <a class="contact-card" href="mailto:martinaseveso3@gmail.com"><span class="cc-lbl">Email</span><span class="cc-val">martinaseveso3@gmail.com</span></a>
+    <a class="contact-card" href="https://linkedin.com/in/martina-seveso-4214821a2"><span class="cc-lbl">LinkedIn</span><span class="cc-val">martina-seveso</span></a>
+    <a class="contact-card" href="https://osf.io/bhwg8/"><span class="cc-lbl">OSF</span><span class="cc-val">osf.io/bhwg8</span></a>
+    <a class="contact-card" href="https://orcid.org/0000-0001-6566-4578"><span class="cc-lbl">ORCID</span><span class="cc-val">0000-0001-6566-4578</span></a>
+    <a class="contact-card" href="https://www.researchgate.net/profile/Martina-Seveso"><span class="cc-lbl">ResearchGate</span><span class="cc-val">Martina Seveso</span></a>
+  </div>
+  <div class="sec-lbl">Location</div>
+  <p style="font-size:16px;color:var(--muted);margin-bottom:1.5rem;">Trinity College Institute of Neuroscience (TCIN)<br>Trinity College Dublin, Dublin, Ireland</p>
+  <div class="sec-lbl">Academic referees</div>
+  <div class="ref-card"><div class="ref-name">Prof. Fiona N. Newell</div><div class="ref-place">Trinity College Dublin</div><div class="ref-email">FNEWELL@tcd.ie</div></div>
+  <div class="ref-card"><div class="ref-name">Dr. Alan O'Dowd</div><div class="ref-place">Trinity College Dublin</div><div class="ref-email">odowda1@tcd.ie</div></div>
+  <div class="ref-card"><div class="ref-name">Dr. Rebecca J. Hirst</div><div class="ref-place">Trinity College Dublin</div><div class="ref-email">HIRSTR@tcd.ie</div></div>
+</div>
+
+<footer>
+  <span class="ft">Dr. Martina A. Seveso · Postdoctoral Researcher · TCIN, Trinity College Dublin</span>
+  <span class="ft">Updated June 2026</span>
+</footer>
+
+<script>
+const PAGES = ['home','news','research','pubs','cv','contact'];
+function show(id) {
+  PAGES.forEach(p => {
+    document.getElementById('p-'+p).classList.toggle('on', p===id);
+    const btn = document.getElementById('nb-'+p);
+    if(btn) btn.classList.toggle('act', p===id);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+const tog = document.getElementById('tog');
+const root = document.documentElement;
+const saved = localStorage.getItem('ms-theme');
+const dark = saved==='dark' || (!saved && window.matchMedia('(prefers-color-scheme:dark)').matches);
+if(dark) root.setAttribute('data-dark','');
+tog.addEventListener('click', () => {
+  const on = root.hasAttribute('data-dark');
+  on ? root.removeAttribute('data-dark') : root.setAttribute('data-dark','');
+  localStorage.setItem('ms-theme', on ? 'light' : 'dark');
+});
+const burger = document.getElementById('burger');
+const mob = document.getElementById('mobMenu');
+burger && burger.addEventListener('click', () => {
+  const open = mob.classList.toggle('open');
+  burger.classList.toggle('open', open);
+});
+function closeMob() { mob.classList.remove('open'); burger.classList.remove('open'); }
+</script>
+</body>
+</html>
